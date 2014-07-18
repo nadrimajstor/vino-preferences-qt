@@ -20,18 +20,18 @@ ApplicationWindow {
         Component.onCompleted: {
             addImportPath(Qt.resolvedUrl('.'));
             importModule_sync('vinogset');
-            call('vinogset.get_key', ['icon-visibility'], function(result){
+            call('vinogset.get_value', ['icon-visibility'], function(result){
                 if (result === "never") {vino_icon_visibility_never.checked = true}
                 if (result === "client") {vino_icon_visibility_client.checked = true}
                 if (result === "always") {vino_icon_visibility_always.checked = true}
             });
-            call('vinogset.get_key', ['use-upnp'], function(result){vino_use_upnp.checked = result});
-            call('vinogset.get_key', ['require-encryption'], function(result){vino_require_encryption.checked = result});
-            call('vinogset.get_key', ['vnc-password'], function(result){vino_vnc_password.text = result});
-            call('vinogset.get_key', ['authentication-methods'], function(result){vino_authentication_methods.checked = (result[0] === "vnc") ? true : false});
-            call('vinogset.get_key', ['prompt-enabled'], function(result){vino_prompt_enabled.checked = result});
-            call('vinogset.get_key', ['view-only'], function(result){vino_view_only.checked = !result});
-            call('vinogset.get_key', ['enabled'], function(result){vino_enabled.checked = result});
+            call('vinogset.get_value', ['use-upnp'], function(result){vino_use_upnp.checked = result});
+            call('vinogset.get_value', ['require-encryption'], function(result){vino_require_encryption.checked = result});
+            call('vinogset.get_value', ['vnc-password'], function(result){vino_vnc_password.text = result});
+            call('vinogset.get_value', ['authentication-methods'], function(result){vino_authentication_methods.checked = (result[0] === "vnc") ? true : false});
+            call('vinogset.get_value', ['prompt-enabled'], function(result){vino_prompt_enabled.checked = result});
+            call('vinogset.get_value', ['view-only'], function(result){vino_view_only.checked = !result});
+            call('vinogset.get_value', ['enabled'], function(result){vino_enabled.checked = result});
         }
         onError: console.log('Error: ' + traceback)
     }

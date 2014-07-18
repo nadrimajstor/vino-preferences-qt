@@ -5,11 +5,14 @@ import gi.repository.Gio
 
 settings = gi.repository.Gio.Settings.new('org.gnome.Vino')
 
-def set_key(key, value):
+def set_value(key, value):
+    """
+    For a given key sets a value
+    """
     settings[key] = value
 
 
-def get_key(key):
+def get_value(key):
     """
     For a given key returns current value from vino's gsettings
     """
