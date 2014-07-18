@@ -9,7 +9,10 @@ def set_value(key, value):
     """
     For a given key sets a value
     """
+    if settings[key] == value:
+        return
     settings[key] = value
+    return str(key)+str(value)
 
 
 def get_value(key):

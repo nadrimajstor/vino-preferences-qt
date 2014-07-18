@@ -20,11 +20,11 @@ ApplicationWindow {
         property bool view_only: true
         property bool prompt_enabled: true
         property bool authentication_methods: false
-        property string vnc_password: ""
+        property string vnc_password: "keyring"
         property bool require_encryption: true
         property bool use_upnp: false
         property bool icon_visibility_never: false
-        property bool icon_visibility_client: false
+        property bool icon_visibility_client: true
         property bool icon_visibility_always: false
 
         function init() {
@@ -35,7 +35,7 @@ ApplicationWindow {
             });
             call('vinogset.get_value', ['use-upnp'], function(result){vino.use_upnp = result});
             call('vinogset.get_value', ['require-encryption'], function(result){vino.require_encryption = result});
-            call('vinogset.get_value', ['vnc-password'], function(result){vino.vnc_password = result});
+            call('vinogset.get_value', ['vnc-password'], function(result){vino.vnc_password = (result === "keyring") ? result : vino.vnc_password = Qt.atob(result)});
             call('vinogset.get_value', ['authentication-methods'], function(result){vino.authentication_methods = (result[0] === "vnc") ? true : false});
             call('vinogset.get_value', ['prompt-enabled'], function(result){vino.prompt_enabled = result});
             call('vinogset.get_value', ['view-only'], function(result){vino.view_only = !result});
@@ -48,6 +48,16 @@ ApplicationWindow {
             init();
         }
         onError: console.log('Error: ' + traceback)
+        onEnabledChanged: call('vinogset.set_value', ['enabled', vino.enabled], function(){})
+        onView_onlyChanged: call('vinogset.set_value', ['view-only', !vino.view_only], function(){})
+        onPrompt_enabledChanged: call('vinogset.set_value', ['prompt-enabled', vino.prompt_enabled], function(){})
+        onAuthentication_methodsChanged: call('vinogset.set_value', ['authentication-methods', (vino.authentication_methods) ? ["vnc"] : ["none"]], function(){})
+        onVnc_passwordChanged: call('vinogset.set_value', ['vnc-password', (vino.vnc_password === "keyring") ? "keyring" : Qt.btoa(vino.vnc_password)], function(){})
+        onRequire_encryptionChanged: call('vinogset.set_value', ['require-encryption', vino.require_encryption], function(){})
+        onUse_upnpChanged: call('vinogset.set_value', ['use-upnp', vino.use_upnp], function(){})
+        onIcon_visibility_neverChanged: if (vino.icon_visibility_never) call('vinogset.set_value', ['icon-visibility', 'never'], function(){})
+        onIcon_visibility_clientChanged: if (vino.icon_visibility_client) call('vinogset.set_value', ['icon-visibility', 'client'], function(){})
+        onIcon_visibility_alwaysChanged: if (vino.icon_visibility_always) call('vinogset.set_value', ['icon-visibility', 'always'], function(){})
     }
 
     ColumnLayout {
