@@ -12,4 +12,4 @@ Requirements:
 qmlscene vino-preferences-qtpy.qml -style gtk
 ```
 
-![screenshot](https://github.com/nadrimajstor/vino-preferences-qt/blob/master/docs/images/Screenshot-Desktop%20Sharing%20Preferences.png)
+![screenshot](docs/images/Screenshot-Desktop Sharing Preferences.png)
